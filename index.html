@@ -116,6 +116,7 @@ nav.tabs button.on{color:var(--txt);background:var(--panel2);box-shadow:inset 0 
 #lform input{text-align:center}
 .lsw{color:#d0d0d0;font-size:14px;padding:8px;text-decoration:underline}
 #lmsg.ok{color:#8dffb0}
+#lmsg{white-space:pre-line;overflow-wrap:anywhere}
 /* onboarding */
 #ob{position:fixed;inset:0;background:#000;z-index:55;display:none;align-items:center;justify-content:center;padding:20px}
 #ob.on{display:flex}
@@ -368,15 +369,21 @@ function msg(t,ok){var m=$('#lmsg');m.textContent=t;m.className=ok?'ok':''}
 function loginErr(t){if($('#login').classList.contains('on')&&!$('#lmsg').textContent){msg(t);busy(false)}}
 window.addEventListener('error',function(e){console.error('PAGE_ERROR',e.message,e.filename,e.lineno,e.colno);loginErr('حدث خطأ في الصفحة: '+(e.message||'')+' ['+String(e.filename||'مصدر غير معروف').split('/').pop()+':'+(e.lineno||0)+']')});
 function setMode(r){regMode=r;$('#lname').style.display=r?'':'none';$('#lgo').textContent=r?'إنشاء الحساب':'تسجيل الدخول';$('#lsw').textContent=r?'لديك حساب؟ تسجيل الدخول':'ليس لديك حساب؟ إنشاء حساب جديد';$('#lpass').autocomplete=r?'new-password':'current-password';msg('')}
+function rawInfo(e){
+ var c=e&&e.code,t=e&&e.type,m=String((e&&e.message)||e||'');
+ return '\n[رقم الخطأ: '+((c===undefined||c===0)?'0 (فشل الطلب قبل وصول رد من Appwrite)':c)+(t?' | النوع: '+t:'')+' | الرسالة الأصلية: '+m+' | المضيف الحالي: '+location.hostname+']';
+}
 function awErr(e){
- var c=e&&e.code,t=e&&e.type,m=String((e&&e.message)||'');
- if(t==='user_already_exists'||c===409)return 'هذا البريد مسجل مسبقاً. سجّل الدخول بدلاً من إنشاء حساب.';
- if(t==='user_invalid_credentials')return 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
- if(t==='user_blocked')return 'هذا الحساب موقوف.';
- if(c===429||t==='general_rate_limit_exceeded')return 'محاولات كثيرة. انتظر قليلاً ثم حاول مرة ثانية.';
- if(c===400)return 'تحقق من البيانات: بريد صحيح وكلمة مرور من 8 أحرف على الأقل. ('+m+')';
- if(!c||/failed to fetch|network|load failed/i.test(m))return 'تعذر الاتصال بخدمة Appwrite. تأكد من الإنترنت ومن إضافة نطاق الموقع كمنصة ويب (Web Platform) في Appwrite.';
- return 'خطأ: '+m+(t?' ('+t+')':'');
+ var c=e&&e.code,t=e&&e.type,m=String((e&&e.message)||''),h;
+ if(t==='user_already_exists'||c===409)h='هذا البريد مسجل مسبقاً. سجّل الدخول بدلاً من إنشاء حساب.';
+ else if(t==='user_invalid_credentials')h='البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+ else if(t==='user_blocked')h='هذا الحساب موقوف.';
+ else if(c===429||t==='general_rate_limit_exceeded')h='محاولات كثيرة. انتظر قليلاً ثم حاول مرة ثانية.';
+ else if(t==='general_unknown_origin'||c===403)h='Appwrite رفض الطلب: المضيف الحالي غير مضاف كمنصة ويب. أضف المضيف المذكور أدناه (بدون https وبدون المسار).';
+ else if(c===400)h='تحقق من البيانات: بريد صحيح وكلمة مرور من 8 أحرف على الأقل.';
+ else if(!c||/failed to fetch|network|load failed/i.test(m))h='فشل الاتصال بـ Appwrite قبل وصول أي رد. الأسباب المحتملة: المضيف الحالي غير مضاف في Platforms، أو الإنترنت، أو حاجب إعلانات يمنع الطلب.';
+ else h='رفض Appwrite الطلب.';
+ return h+rawInfo(e);
 }
 async function enter(isNew){
  var u=await awAcc.get();
