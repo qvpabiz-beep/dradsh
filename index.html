@@ -2,19 +2,19 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <title>درادش</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#000;--panel:#121212;--panel2:#1f1f1f;--line:#3a3a3a;--txt:#fff;--mut:#a8a8a8;--ac:#fff;--ac2:#d4d4d4;--y:#ffe600;--g:#2dff6e;--r:#ff4a58;
 color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;background:var(--bg);color:var(--txt);font-family:'Tajawal','Segoe UI',Tahoma,sans-serif;font-size:16px}
+html,body{overflow-x:hidden;max-width:100%;height:100%;background:var(--bg);color:var(--txt);font-family:'Tajawal','Segoe UI',Tahoma,sans-serif;font-size:16px}
 body{background:var(--bg)}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 input,select,textarea{font:inherit;color:var(--txt);background:var(--panel);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;width:100%}
 :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-#app{max-width:520px;margin:0 auto;height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden}
+#app{width:100%;max-width:none;margin:0;height:100%;height:100dvh;display:flex;flex-direction:column;position:relative;overflow:hidden}
 header.top{padding:14px 16px 8px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-size:28px;font-weight:800;letter-spacing:0;color:#fff}
 .sub{color:var(--mut);font-size:13px}
@@ -51,12 +51,13 @@ nav.tabs button.on{color:var(--txt);background:var(--panel2);box-shadow:inset 0 
 .bd{font-size:11px;font-weight:800;border-radius:8px;padding:1px 7px;margin-inline-end:6px;color:#111;vertical-align:middle}
 .bd.v1{background:var(--y)}.bd.v2{background:var(--g)}.bd.v3{background:linear-gradient(90deg,#ffd86b,#ff8a5e)}.bd.v4{background:var(--ac)}
 /* chat overlay */
-#chat{position:absolute;inset:0;background:var(--bg);display:none;flex-direction:column;z-index:5;padding-top:env(safe-area-inset-top,0px)}
+#chat{position:fixed;inset:0;height:100%;height:100dvh;background:var(--bg);display:none;flex-direction:column;z-index:5;padding-top:env(safe-area-inset-top,0px)}
 #chat.on{display:flex}
-.ch-h{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--panel);border-bottom:1px solid var(--line)}
+.ch-h{flex:none;display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--panel);border-bottom:1px solid var(--line)}
 .ic{width:40px;height:40px;border-radius:12px;background:var(--panel2);font-size:20px;display:grid;place-items:center;flex:none}
 .ch-h .t{flex:1;min-width:0}.ch-h .t b{display:block}
-#msgs{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:7px}
+#msgs{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:10px;display:flex;flex-direction:column;gap:7px}
+#msgs>:first-child{margin-top:auto}
 .m{display:flex;gap:6px;align-items:flex-end;max-width:82%;align-self:flex-start}.m .avw{padding:2px}
 .m.me{align-self:flex-end;flex-direction:row-reverse}
 .m .bub{background:var(--panel);border:0;border-radius:14px 4px 14px 14px;padding:5px 10px 4px;min-width:0;width:fit-content;max-width:100%}
@@ -66,11 +67,11 @@ nav.tabs button.on{color:var(--txt);background:var(--panel2);box-shadow:inset 0 
 .bub .n{font-size:12px;display:block;margin-bottom:1px;line-height:1.4}.bub .tx{font-size:14px;font-weight:400;line-height:1.5}.bub .n .nm{font-weight:700;font-size:12px}.bub .n .bd{font-size:9px;font-weight:700;padding:0 5px;margin-inline-end:4px}
 .nm.v1{text-shadow:0 0 6px rgba(255,230,0,.5)}.nm.v2{text-shadow:0 0 6px rgba(45,255,110,.5)}.nm.v4{text-shadow:0 0 6px rgba(255,255,255,.45)}
 .tx{overflow-wrap:anywhere}
-.send{display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--panel);border-top:1px solid var(--line)}
+.send{flex:none;display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--panel);border-top:1px solid var(--line)}
 .send input{border-radius:22px}
 .go{width:46px;height:46px;border-radius:50%;background:#fff;font-size:20px;flex:none;color:#000;font-weight:800}
-#mem{position:absolute;top:0;bottom:0;inset-inline-start:0;width:78%;max-width:320px;background:var(--panel);border-inline-end:1.5px solid var(--line);z-index:6;transform:translateX(-105%);transition:transform .25s;padding:14px;overflow-y:auto;padding-top:calc(14px + env(safe-area-inset-top,0px))}
-#mem.on{transform:none}
+#mem{position:absolute;top:0;bottom:0;inset-inline-start:0;width:78%;max-width:320px;background:var(--panel);border-inline-end:1.5px solid var(--line);z-index:6;transform:translateX(105%);visibility:hidden;transition:transform .25s,visibility 0s .25s;padding:14px;overflow-y:auto;padding-top:calc(14px + env(safe-area-inset-top,0px))}
+#mem.on{transform:none;visibility:visible;transition:transform .25s}
 .mu{display:flex;align-items:center;gap:10px;width:100%;text-align:right;padding:8px;border-radius:14px}
 .mu:active{background:var(--panel2)}
 /* store */
@@ -116,6 +117,7 @@ nav.tabs button.on{color:var(--txt);background:var(--panel2);box-shadow:inset 0 
 #lform input{text-align:center}
 .lsw{color:#d0d0d0;font-size:14px;padding:8px;text-decoration:underline}
 #lmsg.ok{color:#8dffb0}
+.ver{font-size:11px;color:#8a8a8a;direction:ltr;letter-spacing:.4px}
 #lmsg{white-space:pre-line;overflow-wrap:anywhere}
 /* onboarding */
 #ob{position:fixed;inset:0;background:#000;z-index:55;display:none;align-items:center;justify-content:center;padding:20px}
@@ -179,7 +181,7 @@ textarea{resize:none;height:92px;line-height:1.7}
 </head>
 <body>
 <div id="app">
-  <header class="top"><div><div class="logo">درادش</div><div class="sub">دردشة عربية بلا حدود</div></div><div id="hmini"></div></header>
+  <header class="top"><div><div class="logo">درادش</div><div class="ver">v5.3 · appwrite@17.0.0</div><div class="sub">دردشة عربية بلا حدود</div></div><div id="hmini"></div></header>
   <main>
     <section class="view on" id="v-rooms"></section>
     <section class="view" id="v-store"></section>
@@ -206,7 +208,7 @@ textarea{resize:none;height:92px;line-height:1.7}
   </div>
 </div>
 <div id="login" class="on" role="dialog" aria-modal="true"><div class="bgb b1"></div><div class="bgb b2"></div>
-<div class="logo">درادش</div><div class="sub lt" style="animation-delay:.3s">دردشة عربية بلا حدود</div><div class="sub">نسخة اتصال مباشر 5</div>
+<div class="logo">درادش</div><div class="ver">v5.3 · appwrite@17.0.0</div><div class="sub lt" style="animation-delay:.3s">دردشة عربية بلا حدود</div>
 <div style="height:6px"></div>
 <div id="lform" class="lt" style="animation-delay:.5s">
 <input id="lname" placeholder="الاسم" autocomplete="name" maxlength="20" aria-label="الاسم" style="display:none">
@@ -222,7 +224,7 @@ textarea{resize:none;height:92px;line-height:1.7}
 <input id="obn" maxlength="20" placeholder="اسم الحساب" aria-label="اسم الحساب" style="text-align:center">
 <button class="btn" id="obgo">ابدأ الدردشة</button></div></div>
 <div class="md" id="md" role="dialog" aria-modal="true"><div class="mc" id="mc"></div></div>
-
+<script src="https://cdn.jsdelivr.net/npm/appwrite@17.0.0"></script>
 <script>
 var $=function(s){return document.querySelector(s)};
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
@@ -236,14 +238,14 @@ var rooms=[
  {id:'ae',n:'غرفة الإمارات',f:'🇦🇪',c:0},{id:'jo',n:'غرفة الأردن',f:'🇯🇴',c:0},
  {id:'gl',n:'الغرفة العامة',f:'🌍',c:0}
 ];
-var msgs={},cur=null,curRoom=null,online={};
+var msgs={},cur=null,curRoom=null,online={},msgStick=true;
 var BD={1:'VIP',2:'VIP2 ⭐',3:'👑 الملك',4:'مدير'};
 function badge(u){return u.v?'<span class="bd v'+u.v+'">'+BD[u.v]+'</span>':''}
 function nm(u){return badge(u)+'<span class="nm v'+u.v+'">'+esc(u.n)+'</span>'}
 function av(u,s){var inner=u.img?'<img alt="" src="'+u.img+'">':u.e;
  var st=s?' style="width:'+s+'px;height:'+s+'px;font-size:'+(s*.55)+'px"':'';
  return '<span class="avw f'+u.v+'"><span class="av"'+st+'>'+inner+'</span></span>'}
-function toast(t){var d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(function(){d.remove()},2200)}
+function toast(t,ms){var d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(function(){d.remove()},ms||2200)}
 
 /* tabs */
 document.querySelectorAll('nav.tabs button').forEach(function(b){b.onclick=function(){
@@ -317,23 +319,39 @@ function render(){renderRooms();renderStore();renderProf();$('#hmini').innerHTML
 /* chat */
 function addRemote(key,id,v){var L=(msgs[key]=msgs[key]||[]);if(L.some(function(m){return m.id===id}))return;
  var u=v.uid===me.id?me:{id:v.uid,n:v.n,v:v.v||0,e:'😎',img:v.p||null};
+ if(v.uid===me.id)msgStick=true;
  L.push({id:id,u:u,t:v.t,ts:v.ts||Date.now()});if(cur&&cur.key===key)drawMsgs()}
 function fmt(ts){var d=new Date(ts);try{return d.toLocaleTimeString('ar-IQ',{hour:'2-digit',minute:'2-digit'})}catch(e){return d.getHours()+':'+d.getMinutes()}}
 function drawMsgs(){
  var el=$('#msgs'),h='';
- var L=(msgs[cur.key]||[]);L.forEach(function(m,i){var mine=m.u===me;if(!m.ts)m.ts=Date.now()-(L.length-i)*120000;
+ var L=(msgs[cur.key]||[]);
+ L.forEach(function(m,i){if(!m.ts)m.ts=Date.now()-(L.length-i)*120000});
+ L.sort(function(a,b){return (a.ts-b.ts)||(String(a.id)<String(b.id)?-1:1)});
+ var near=(el.scrollHeight-el.scrollTop-el.clientHeight)<120,prev=el.scrollTop;
+ L.forEach(function(m){var mine=m.u===me;
   h+='<div class="m v'+m.u.v+(mine?' me':'')+'">'+av(m.u,24)+'<div class="bub"><span class="n">'+nm(m.u)+'</span><div class="mt"><span class="tx">'+esc(m.t)+'</span><span class="ts">'+fmt(m.ts)+'</span></div></div></div>'});
- el.innerHTML=h;el.scrollTop=el.scrollHeight}
+ el.innerHTML=h;
+ if(msgStick||near){el.scrollTop=el.scrollHeight;msgStick=false}else el.scrollTop=prev}
+function fitChat(){
+ var c=$('#chat');if(!c.classList.contains('on'))return;
+ var el=$('#msgs'),wasNear=(el.scrollHeight-el.scrollTop-el.clientHeight)<120,vv=window.visualViewport;
+ if(vv&&vv.height<window.innerHeight-80){c.style.height=vv.height+'px';c.style.top=vv.offsetTop+'px';c.style.bottom='auto'}
+ else{c.style.height='';c.style.top='';c.style.bottom=''}
+ if(wasNear)el.scrollTop=el.scrollHeight}
+function unfitChat(){var c=$('#chat');c.style.height='';c.style.top='';c.style.bottom=''}
 function openChat(key,title,sub,dm){
  cur={key:key,dm:dm};$('#ct').textContent=title;$('#cs').textContent=sub;
- msgs[key]=[];
- $('#chat').classList.add('on');$('#mem').classList.remove('on');drawMsgs();AUTH.openChat(key,dm)}
+ msgs[key]=[];msgStick=true;
+ $('#chat').classList.add('on');$('#mem').classList.remove('on');fitChat();drawMsgs();AUTH.openChat(key,dm)}
 function openRoom(id){var r=rooms.filter(function(x){return x.id===id})[0];curRoom=id;AUTH.join(id);openChat(id,r.f+' '+r.n,r.c+' متواجد',null)}
 function send(){var i=$('#inp'),t=i.value.trim();if(!t)return;i.value='';AUTH.send(cur.key,t,cur.dm);
 }
 $('#gobtn').onclick=send;
 $('#inp').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();send()}});
-$('#back').onclick=function(){AUTH.closeChat();AUTH.leave();curRoom=null;$('#chat').classList.remove('on')};
+$('#back').onclick=function(){AUTH.closeChat();AUTH.leave();curRoom=null;$('#chat').classList.remove('on');unfitChat()};
+if(window.visualViewport){visualViewport.addEventListener('resize',fitChat);visualViewport.addEventListener('scroll',fitChat)}
+window.addEventListener('resize',fitChat);
+$('#inp').addEventListener('focus',function(){setTimeout(function(){fitChat();var e=$('#msgs');e.scrollTop=e.scrollHeight},300)});
 function setOnline(rid,list){online[rid]=list;var r=rooms.filter(function(x){return x.id===rid})[0];if(r)r.c=list.length;refreshPresence()}
 function others(){return (online[curRoom]||[]).filter(function(u){return u.id!==me.id}).map(function(u){return {id:u.id,n:u.n,v:u.v||0,e:'😎',img:u.p||null}})}
 function drawMem(){var o=others(),h='<div class="sec" style="margin-top:0">المتواجدون</div>';
@@ -344,7 +362,7 @@ function drawMem(){var o=others(),h='<div class="sec" style="margin-top:0">ال�
   var u=o[i];openChat('dm'+u.id,'✉️ '+u.n,'رسالة خاصة',u)}})}
 function refreshPresence(){
  if($('#v-rooms').classList.contains('on'))renderRooms();
- if(cur&&!cur.dm&&curRoom){var r=rooms.filter(function(x){return x.id===curRoom})[0];if(r)$('#cs').textContent=r.c+' متواجد'}
+ if(cur&&!cur.dm&&curRoom){var r=rooms.filter(function(x){return x.id===curRoom})[0];if(typeof paint==='function')paint();else if(r)$('#cs').textContent=r.c+' متواجد'}
  if($('#mem').classList.contains('on'))drawMem()}
 $('#memb').onclick=function(){drawMem();$('#mem').classList.add('on')};
 $('#chat').addEventListener('click',function(e){if($('#mem').classList.contains('on')&&!$('#mem').contains(e.target)&&e.target.id!=='memb')$('#mem').classList.remove('on')});
@@ -357,33 +375,183 @@ function shrink(f,cb){var r=new FileReader();r.onload=function(){var im=new Imag
 function afterAuth(u,isNew,m){me.n=u.n||me.n;me.img=u.img||null;me.v=u.v||0;me.bio=u.bio||'';me.id=u.id||me.id;me.email=u.email||'';
  busy(false);$('#login').classList.remove('on');$('#lmsg').textContent='';
  if(u.pending){openOb()}else{if(m==='create'&&!isNew)toast('لديك حساب مسبقاً، تم تسجيل دخولك');render()}}
-function signedOut(){AUTH.closeChat();online={};rooms.forEach(function(r){r.c=0});me.n='ضيف درادش';me.v=0;me.img=null;me.bio='';me.email='';curRoom=null;$('#chat').classList.remove('on');$('#ob').classList.remove('on');$('#login').classList.add('on');busy(false);render()}
+function signedOut(){AUTH.closeChat();online={};rooms.forEach(function(r){r.c=0});me.n='ضيف درادش';me.v=0;me.img=null;me.bio='';me.email='';curRoom=null;$('#chat').classList.remove('on');unfitChat();$('#ob').classList.remove('on');$('#login').classList.add('on');busy(false);render()}
 function obDraw(){$('#obav').innerHTML=av({v:0,e:'😎',img:obImg},120)+'<button class="cam" aria-label="اختيار صورة">📷</button>'}
 function openOb(){obImg=me.img;obDraw();$('#obn').value=me.n==='ضيف درادش'?'':me.n;$('#ob').classList.add('on')}
 $('#obav').onclick=function(){$('#obf').click()};
 $('#obf').onchange=function(e){var f=e.target.files[0];if(!f)return;shrink(f,function(d){obImg=d;obDraw()})};
 $('#obgo').onclick=function(){var n=$('#obn').value.trim();if(!n){toast('اكتب اسم الحساب');return}me.n=n;me.img=obImg;AUTH.save(true);$('#ob').classList.remove('on');render();toast('أهلاً بك في درادش')};
 /*AW_START*/
-var regMode=false;
-var API='https://nyc.cloud.appwrite.io/v1';
-var PROJECT='6af57abc0001577c8491';
-function msg(t,ok){var m=$('#lmsg');m.textContent=t;m.className=ok?'ok':''}
-function setMode(r){regMode=r;$('#lname').style.display=r?'':'none';$('#lgo').textContent=r?'إنشاء الحساب':'تسجيل الدخول';$('#lsw').textContent=r?'لديك حساب؟ تسجيل الدخول':'ليس لديك حساب؟ إنشاء حساب جديد';$('#lpass').autocomplete=r?'new-password':'current-password';msg('')}
-function apiError(e){var c=e.code||0,t=e.type||'',m=e.message||String(e);if(c===409)return 'هذا البريد مستخدم مسبقاً. جرّب تسجيل الدخول. ['+m+']';if(c===401)return 'بيانات الدخول غير صحيحة أو الجلسة منتهية. ['+m+']';return 'تعذر إكمال العملية. [الرمز: '+c+' | النوع: '+t+' | الرسالة: '+m+']'}
-async function request(path,method,data){
- var headers={'X-Appwrite-Project':PROJECT,'Content-Type':'application/json'};
- var options={method:method||'GET',headers:headers,credentials:'include'};
- if(data!==undefined)options.body=JSON.stringify(data);
- var response;
- try{response=await fetch(API+path,options)}catch(e){throw {code:0,message:'تعذر الاتصال بالخادم: '+e.message}}
- var body=await response.json().catch(function(){return {message:'رد غير مفهوم من الخادم'}});
- if(!response.ok)throw {code:response.status,type:body.type,message:body.message||'خطأ غير معروف'};
- return body;
+var DBG=/[?&]debug=1/.test(location.search);
+var AWDB={db:'6af5915900028cfec63b',table:'6af5919e001b7a73d724',f:{room:'roomId',uid:'senderId',name:'senderName',photo:null,text:'text'}};
+var awAcc=null,awClient=null,tdb=null,rtUnsub=null,pollT=null,curKey=null,regMode=false;
+var D={},dbgBox=null,dbgOpen=true,selfWait={},rtN=0,prN=0,stMsg='',stPres='';
+function dbg(k,v){D[k]=v;if(DBG)dbgDraw()}
+function ts(){var d=new Date();return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+':'+('0'+d.getSeconds()).slice(-2)}
+function dbgDraw(){
+ if(!dbgBox){
+  dbgBox=document.createElement('div');
+  dbgBox.style.cssText='position:fixed;top:calc(env(safe-area-inset-top,0px) + 4px);left:4px;z-index:90;max-width:94vw;background:rgba(0,0,0,.93);color:#fff;border:1px solid #fff;border-radius:10px;padding:6px 8px;font:11px/1.55 monospace;direction:ltr;text-align:left;max-height:58vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere';
+  dbgBox.addEventListener('click',function(e){if(e.target.tagName==='BUTTON')return;dbgOpen=!dbgOpen;dbgDraw()});
+  document.body.appendChild(dbgBox);
+ }
+ var h='<b>DIAG v5.3 — tap to '+(dbgOpen?'collapse':'expand')+'</b>';
+ if(dbgOpen){
+  [['ids','IDS'],['acct','ACCOUNT'],['save','SAVE'],['list','FETCH'],['rt','REALTIME'],['rtself','RT self-test'],['pres','PRESENCE write'],['presrows','PRESENCE read'],['test','READ TEST']].forEach(function(p){if(D[p[0]]!==undefined)h+='\n'+p[1]+': '+D[p[0]]});
+  h+='\n<button id="dbgrun" style="margin-top:4px;padding:3px 8px">Run read test</button>';
+ }
+ dbgBox.innerHTML=h;
+ var b=document.getElementById('dbgrun');if(b)b.onclick=dbgTest;
 }
-function uniqueId(){return 'unique()'}
+async function dbgTest(){
+ dbg('test','running...');var out=[],Q=Appwrite.Query;
+ try{var u=await awAcc.get();out.push('account OK '+u.$id.slice(0,8)+' '+u.name)}catch(e){out.push('account FAIL '+rawMsg(e))}
+ try{
+  var qs=[Q.orderDesc('$createdAt'),Q.limit(25)];
+  var r=await awT('listRows',[AWDB.db,AWDB.table,qs],{databaseId:AWDB.db,tableId:AWDB.table,queries:qs});
+  var rows=(r&&(r.rows||r.documents))||[],snd={},rms={};rows.forEach(function(x){snd[x[AWDB.f.uid]]=1;rms[x[AWDB.f.room]]=1});
+  out.push('messages: '+rows.length+' readable (server total '+(r&&r.total)+'), distinct senders='+Object.keys(snd).length+', rooms='+Object.keys(rms).join('/'));
+ }catch(e){out.push('messages FAIL '+rawMsg(e))}
+ try{
+  var q2=[Q.orderDesc('$updatedAt'),Q.limit(100)];
+  var r2=await awT('listRows',[AWDB.db,AWPRES.table,q2],{databaseId:AWDB.db,tableId:AWPRES.table,queries:q2});
+  var rw=(r2&&(r2.rows||r2.documents))||[];out.push('presence: '+rw.length+' rows readable (server total '+(r2&&r2.total)+')');
+ }catch(e){out.push('presence FAIL '+rawMsg(e))}
+ dbg('test',ts()+'\n  '+out.join('\n  '));
+}
+function paint(){
+ var r=rooms.filter(function(x){return x.id===curKey||x.id===curRoom})[0];
+ $('#cs').textContent=stMsg?('⚠ '+stMsg):(stPres?('⚠ '+stPres):(r?(r.c+' متواجد'):subBase));
+}
+function presStatus(err){stPres=err||'';if(curKey||curRoom)paint()}
+function msg(t,ok){var m=$('#lmsg');m.textContent=t;m.className=ok?'ok':''}
+function loginErr(t){if($('#login').classList.contains('on')&&!$('#lmsg').textContent){msg(t);busy(false)}}
+window.addEventListener('error',function(e){console.error('PAGE_ERROR',e.message,e.filename,e.lineno,e.colno);loginErr('حدث خطأ في الصفحة: '+(e.message||'')+' ['+String(e.filename||'مصدر غير معروف').split('/').pop()+':'+(e.lineno||0)+']')});
+function setMode(r){regMode=r;$('#lname').style.display=r?'':'none';$('#lgo').textContent=r?'إنشاء الحساب':'تسجيل الدخول';$('#lsw').textContent=r?'لديك حساب؟ تسجيل الدخول':'ليس لديك حساب؟ إنشاء حساب جديد';$('#lpass').autocomplete=r?'new-password':'current-password';msg('')}
+function rawInfo(e){
+ var c=e&&e.code,t=e&&e.type,m=String((e&&e.message)||e||'');
+ return '\n[رقم الخطأ: '+((c===undefined||c===0)?'0 (فشل الطلب قبل وصول رد من Appwrite)':c)+(t?' | النوع: '+t:'')+' | الرسالة الأصلية: '+m+' | المضيف الحالي: '+location.hostname+']';
+}
+function awErr(e){
+ var c=e&&e.code,t=e&&e.type,m=String((e&&e.message)||''),h;
+ if(t==='user_already_exists'||c===409)h='هذا البريد مسجل مسبقاً. سجّل الدخول بدلاً من إنشاء حساب.';
+ else if(t==='user_invalid_credentials')h='البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+ else if(t==='user_blocked')h='هذا الحساب موقوف.';
+ else if(c===429||t==='general_rate_limit_exceeded')h='محاولات كثيرة. انتظر قليلاً ثم حاول مرة ثانية.';
+ else if(t==='general_unknown_origin'||c===403)h='Appwrite رفض الطلب: المضيف الحالي غير مضاف كمنصة ويب. أضف المضيف المذكور أدناه (بدون https وبدون المسار).';
+ else if(c===400)h='تحقق من البيانات: بريد صحيح وكلمة مرور من 8 أحرف على الأقل.';
+ else if(!c||/failed to fetch|network|load failed/i.test(m))h='فشل الاتصال بـ Appwrite قبل وصول أي رد. الأسباب المحتملة: المضيف الحالي غير مضاف في Platforms، أو الإنترنت، أو حاجب إعلانات يمنع الطلب.';
+ else h='رفض Appwrite الطلب.';
+ return h+rawInfo(e);
+}
+async function awDiagnose(){
+ var ep='https://nyc.cloud.appwrite.io/v1';
+ try{await fetch(ep+'/health/version',{mode:'no-cors'})}
+ catch(e){return 'التشخيص: خادم Appwrite (nyc.cloud.appwrite.io) غير قابل للوصول من هذا الجهاز. الأسباب: انقطاع الإنترنت، أو حجب الموقع من الشبكة أو الشركة، أو تعطّل الخدمة، أو إيقاف المشروع. جرّب فتح '+ep+'/health/version في Chrome.'}
+ try{var r=await fetch(ep+'/account',{headers:{'X-Appwrite-Project':'6af57abc0001577c8491'}});return 'التشخيص: الخادم يستجيب والنطاق مسموح (رمز '+r.status+'). المشكلة ليست بالشبكة ولا بالنطاق.'}
+ catch(e){return 'التشخيص: الخادم يستجيب لكنه يرفض هذا النطاق (CORS). أضف المضيف '+location.hostname+' في Appwrite، ثم Overview، ثم Platforms، كمنصة Web، بالضبط بدون https وبدون مسار.'}
+}
+function showErr(e,prefix){
+ var base=(prefix||'')+awErr(e);msg(base);
+ if(!(e&&e.code)){awDiagnose().then(function(t){if($('#lmsg').textContent===base)msg(base+'\n'+t)})}
+}
+async function awCall(name,pos,obj){
+ try{return await awAcc[name].apply(awAcc,pos)}
+ catch(e){if(e&&/Missing required parameter/i.test(String(e.message))){return await awAcc[name].call(awAcc,obj)}throw e}
+}
+async function awT(name,pos,obj){
+ if(!tdb)throw new Error('مكتبة Appwrite المحمّلة لا تحتوي TablesDB');
+ try{return await tdb[name].apply(tdb,pos)}
+ catch(e){if(e&&/Missing required parameter/i.test(String(e.message))){return await tdb[name].call(tdb,obj)}throw e}
+}
+function rowMsg(r){var F=AWDB.f;return {uid:r[F.uid],n:r[F.name],v:0,p:F.photo?(r[F.photo]||''):'',t:r[F.text],ts:Date.parse(r.$createdAt)||Date.now()}}
+async function loadRoom(key,limit){
+ var Q=Appwrite.Query,F=AWDB.f,qs=[Q.equal(F.room,[key]),Q.orderDesc('$createdAt'),Q.limit(limit)];
+ var res;
+ try{res=await awT('listRows',[AWDB.db,AWDB.table,qs],{databaseId:AWDB.db,tableId:AWDB.table,queries:qs})}
+ catch(e){dbg('list',ts()+' room='+key+' FAIL '+rawMsg(e));throw e}
+ var rows=(res&&(res.rows||res.documents))||[];
+ var snd={};rows.forEach(function(r){snd[r[AWDB.f.uid]]=1});
+ dbg('list',ts()+' room='+key+' OK '+rows.length+' rows readable, distinct senders='+Object.keys(snd).length+(Object.keys(snd).length<2&&rows.length?' (only 1 sender: other users messages not readable?)':''));
+ if(curKey!==key)return;
+ rows.slice().reverse().forEach(function(r){addRemote(key,r.$id,rowMsg(r))});
+}
+var subBase='';
+function chatStatus(err){if(curKey===null&&err)return;stMsg=err||'';paint()}
+function refreshRoom(){if(curKey)loadRoom(curKey,100).then(function(){chatStatus('')}).catch(function(e){chatStatus('تعذر تحميل الرسائل '+rawMsg(e))})}
+window.addEventListener('online',refreshRoom);
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')refreshRoom()});
+function stopRoom(){if(rtUnsub){try{rtUnsub()}catch(e){}rtUnsub=null}if(pollT){clearInterval(pollT);pollT=null}curKey=null}
+var AWPRES={table:'6af6cb9100318c3cc6e0',ttl:60000,beat:20000};
+var presRows={},presJoined=null,presBeat=null,presTimer=null,presUnsub=null,presQ=Promise.resolve(),presSig='',presErr='',presTick=0;
+function presFrom(r){return {room:r.roomId,n:r.userName,t:Date.parse(r.$updatedAt)||Date.now()}}
+function presRecalc(){
+ var now=Date.now(),by={},sig='';
+ Object.keys(presRows).forEach(function(id){var r=presRows[id];if(now-r.t<=AWPRES.ttl)(by[r.room]=by[r.room]||[]).push({id:id,n:r.n,v:0,p:''})});
+ rooms.forEach(function(rm){var l=(by[rm.id]||[]).sort(function(a,b){return a.id<b.id?-1:1});online[rm.id]=l;rm.c=l.length;sig+=rm.id+':'+l.map(function(x){return x.id+x.n}).join(',')+';'});
+ if(sig!==presSig){presSig=sig;refreshPresence()}
+}
+function presFail(e){var m='تعذر تحديث الحضور '+rawMsg(e);console.error('PRESENCE_ERROR',e);dbg('pres',ts()+' FAIL '+rawMsg(e));presStatus(m);if(m!==presErr){presErr=m;toast(m,8000)}}
+async function presSyncAll(){
+ var Q=Appwrite.Query,qs=[Q.orderDesc('$updatedAt'),Q.limit(500)];
+ var res=await awT('listRows',[AWDB.db,AWPRES.table,qs],{databaseId:AWDB.db,tableId:AWPRES.table,queries:qs});
+ var rows=(res&&(res.rows||res.documents))||[],m={};
+ rows.forEach(function(r){m[r.$id]=presFrom(r)});
+ presRows=m;presErr='';presStatus('');presRecalc();
+ var fresh=0,now=Date.now();Object.keys(m).forEach(function(k){if(now-m[k].t<=AWPRES.ttl)fresh++});
+ dbg('presrows',ts()+' OK table rows readable: '+rows.length+', fresh (<60s): '+fresh+', my row visible: '+(m[me.id]?'yes':'no'));
+}
+async function presUpsert(rid){
+ var P=AWPRES.table,id=me.id,data={roomId:rid,userName:me.n,lastSeen:Date.now()};
+ try{await awT('updateRow',[AWDB.db,P,id,data],{databaseId:AWDB.db,tableId:P,rowId:id,data:data})}
+ catch(e){
+  if(e&&e.code===404){
+   var perms=(Appwrite.Permission&&Appwrite.Role)?[Appwrite.Permission.read(Appwrite.Role.users()),Appwrite.Permission.update(Appwrite.Role.user(id)),Appwrite.Permission.delete(Appwrite.Role.user(id))]:undefined;
+   await awT('createRow',[AWDB.db,P,id,data,perms],{databaseId:AWDB.db,tableId:P,rowId:id,data:data,permissions:perms});
+  }else throw e;
+ }
+ presRows[id]={room:rid,n:me.n,t:Date.now()};presErr='';presStatus('');dbg('pres',ts()+' OK joined room='+rid+' (row '+id.slice(0,6)+')');presRecalc();
+}
+async function presJoin(rid){
+ presJoined=rid;
+ if(presBeat){clearInterval(presBeat);presBeat=null}
+ try{await presUpsert(rid);presSyncAll().catch(presFail)}catch(e){presFail(e)}
+ if(presJoined===rid)presBeat=setInterval(function(){if(presJoined)presQ=presQ.then(function(){return presUpsert(presJoined)}).catch(presFail)},AWPRES.beat);
+}
+async function presLeave(){
+ var was=presJoined;presJoined=null;if(presBeat){clearInterval(presBeat);presBeat=null}
+ if(!was||!me.id)return;
+ delete presRows[me.id];presRecalc();
+ try{await awT('deleteRow',[AWDB.db,AWPRES.table,me.id],{databaseId:AWDB.db,tableId:AWPRES.table,rowId:me.id})}catch(e){}
+}
+function presStart(){
+ if(!tdb||presTimer)return;
+ try{
+  var d=AWDB.db,t=AWPRES.table;
+  presUnsub=awClient.subscribe(['databases.'+d+'.tables.'+t+'.rows','tablesdb.'+d+'.tables.'+t+'.rows'],function(r){
+   if(!r||!r.payload||!r.events)return;
+   if(r.events.some(function(e){return /\.delete$/.test(e)}))delete presRows[r.payload.$id];else presRows[r.payload.$id]=presFrom(r.payload);
+   presRecalc();
+  });
+ }catch(e){console.error('PRES_REALTIME',e)}
+ presSyncAll().catch(presFail);
+ presTimer=setInterval(function(){presRecalc();if(++presTick%3===0)presSyncAll().catch(presFail)},5000);
+}
+function presStop(){
+ if(presUnsub){try{presUnsub()}catch(e){}presUnsub=null}
+ if(presTimer){clearInterval(presTimer);presTimer=null}
+ presRows={};presRecalc();
+}
+AUTH.join=function(rid){presQ=presQ.then(function(){return presJoin(rid)}).catch(presFail)};
+AUTH.leave=function(){presQ=presQ.then(presLeave).catch(function(){})};
+window.addEventListener('pagehide',function(){if(presJoined&&me.id&&tdb){awT('deleteRow',[AWDB.db,AWPRES.table,me.id],{databaseId:AWDB.db,tableId:AWPRES.table,rowId:me.id}).catch(function(){})}});
+window.addEventListener('online',function(){if(presTimer)presSyncAll().catch(presFail)});
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&presTimer){presSyncAll().catch(presFail);if(presJoined)presQ=presQ.then(function(){return presUpsert(presJoined)}).catch(presFail)}});
 async function enter(isNew){
- var u=await request('/account','GET');
+ var u=await awAcc.get();
  afterAuth({n:u.name||u.email,id:u.$id,email:u.email,v:0,bio:'',img:null,pending:false},isNew,'login');
+ presStart();
+ dbg('acct','OK '+(u.name||u.email)+' | id '+u.$id);
  toast((isNew?'تم إنشاء حسابك بنجاح، أهلاً ':'أهلاً ')+(u.name||'بك'));
 }
 async function submit(){
@@ -393,14 +561,70 @@ async function submit(){
  else if(!pass){msg('اكتب كلمة المرور.');return}
  msg('');busy(true);
  try{
-  if(regMode){await request('/account','POST',{userId:uniqueId(),email:email,password:pass,name:name});created=true;msg('تم إنشاء الحساب، جارٍ تسجيل الدخول...',true)}
-  try{await request('/account/sessions/email','POST',{email:email,password:pass})}catch(e){if(e.type!=='user_session_already_exists')throw e}
-  await enter(created);$('#lpass').value='';
- }catch(e){busy(false);msg((created?'تم إنشاء الحساب لكن تعذر تسجيل الدخول: ':'')+apiError(e))}
+  if(regMode){var uid=Appwrite.ID.unique();await awCall('create',[uid,email,pass,name],{userId:uid,email:email,password:pass,name:name});created=true;msg('تم إنشاء الحساب بنجاح، جارٍ تسجيل دخولك...',true)}
+  try{await awCall('createEmailPasswordSession',[email,pass],{email:email,password:pass})}catch(e){if(!(e&&e.type==='user_session_already_exists'))throw e}
+  await enter(created);
+  $('#lpass').value='';
+ }catch(e){busy(false);showErr(e,created?'تم إنشاء الحساب لكن تعذر تسجيل الدخول: ':'')}
 }
-AUTH.out=async function(){try{await request('/account/sessions/current','DELETE')}catch(e){if(e.code!==401){toast(apiError(e));return}}$('#lpass').value='';signedOut();setMode(false);toast('تم تسجيل الخروج')};
-AUTH.send=function(key,t){addRemote(key,'l'+Date.now()+Math.random(),{uid:me.id,n:me.n,v:me.v,t:t,ts:Date.now()})};
-async function awStart(){try{await enter(false)}catch(e){busy(false);if(e.code!==401)msg(apiError(e))}}
+AUTH.out=async function(){
+ try{presQ=presQ.then(presLeave).catch(function(){});await presQ}catch(e){}
+ presStop();
+ try{await awCall('deleteSession',['current'],{sessionId:'current'})}catch(e){if(!(e&&e.code===401)){toast('تعذر تسجيل الخروج: '+awErr(e));return}}
+ $('#lpass').value='';signedOut();setMode(false);toast('تم تسجيل الخروج');
+};
+AUTH.closeChat=function(){stopRoom()};
+AUTH.openChat=function(key,dm){
+ stopRoom();
+ if(dm||!tdb)return;
+ curKey=key;subBase=$('#cs').textContent;
+ loadRoom(key,100).catch(function(e){var m='تعذر تحميل الرسائل '+rawMsg(e);chatStatus(m);toast(m,8000)});
+ try{
+  var d=AWDB.db,t=AWDB.table;
+  rtUnsub=awClient.subscribe(['databases.'+d+'.tables.'+t+'.rows','tablesdb.'+d+'.tables.'+t+'.rows'],function(r){
+   if(!r||!r.payload||!r.events||!r.events.some(function(e){return /\.create$/.test(e)}))return;
+   rtN++;
+   if(selfWait[r.payload.$id]){dbg('rtself',ts()+' OK own message event received in '+(Date.now()-selfWait[r.payload.$id])+' ms');delete selfWait[r.payload.$id]}
+   dbg('rt',ts()+' subscribed; create events received: '+rtN+'; last: room='+r.payload[AWDB.f.room]+' sender='+String(r.payload[AWDB.f.uid]).slice(0,6));
+   if(r.payload[AWDB.f.room]!==curKey)return;
+   addRemote(curKey,r.payload.$id,rowMsg(r.payload));
+  });
+ dbg('rt',ts()+' subscribed (waiting for events); create events received: '+rtN);
+ }catch(e){console.error('REALTIME_ERROR',e);dbg('rt','FAIL subscribe '+rawMsg(e))}
+ pollT=setInterval(function(){if(curKey)loadRoom(curKey,50).then(function(){chatStatus('')}).catch(function(e){chatStatus('تعذر تحميل الرسائل '+rawMsg(e))})},5000);
+};
+function rawMsg(e){return '['+((e&&e.code)||0)+(e&&e.type?' '+e.type:'')+'] '+String((e&&e.message)||e||'')}
+AUTH.send=async function(key,t,dm){
+ if(dm){toast('الرسائل الخاصة غير مفعّلة بعد: لا تُحفظ ولا تصل. استخدم رسائل الغرف.',6000);if(!$('#inp').value)$('#inp').value=t;return}
+ var F=AWDB.f,data={},id=Appwrite.ID.unique();
+ data[F.room]=key;data[F.uid]=me.id;data[F.name]=me.n;data[F.text]=t.slice(0,500);
+ if(F.photo&&typeof me.img==='string'&&/^https?:/.test(me.img)&&me.img.length<=2000)data[F.photo]=me.img;
+ selfWait[id]=Date.now();
+ try{
+  var perms=(Appwrite.Permission&&Appwrite.Role)?[Appwrite.Permission.read(Appwrite.Role.users())]:undefined;
+  var row=await awT('createRow',[AWDB.db,AWDB.table,id,data,perms],{databaseId:AWDB.db,tableId:AWDB.table,rowId:id,data:data,permissions:perms});
+  if(!row||row.$id!==id||row[F.room]!==key||row[F.uid]!==me.id)throw new Error('رد Appwrite غير متوقع بعد الحفظ (لم يرجع الصف المطلوب)');
+  if(typeof tdb.getRow==='function'){try{await awT('getRow',[AWDB.db,AWDB.table,id],{databaseId:AWDB.db,tableId:AWDB.table,rowId:id})}catch(e2){e2.message='لم يُؤكَّد الحفظ عند القراءة: '+e2.message;throw e2}}
+  addRemote(key,row.$id,rowMsg(row));
+  chatStatus('');
+  dbg('save',ts()+' OK room='+key+' row='+row.$id+' (create + read-back confirmed)');
+  setTimeout(function(){if(selfWait[row.$id]){delete selfWait[row.$id];dbg('rtself',ts()+' FAIL no realtime event for own message in 4s -> realtime or read permission problem (polling every 5s still works)')}},4000);
+  if(DBG)toast('✓ حُفظت: DB '+AWDB.db+' | Table '+AWDB.table+' | Row '+row.$id,9000);
+ }catch(e){
+  console.error('SEND_ERROR',e);
+  var em='تعذر حفظ الرسالة '+rawMsg(e);
+  delete selfWait[id];chatStatus(em);toast(em,9000);dbg('save',ts()+' FAIL '+rawMsg(e));
+  if(!$('#inp').value)$('#inp').value=t;
+ }
+};
+async function awStart(){
+ if(!window.Appwrite||!Appwrite.Client){msg('تعذر تحميل مكتبة Appwrite. تأكد من الإنترنت ثم أعد تحميل الصفحة.');return}
+ dbg('ids','endpoint nyc.cloud.appwrite.io | project 6af57abc0001577c8491 | db '+AWDB.db+' | messages '+AWDB.table+' | presence '+AWPRES.table+' | host '+location.hostname);
+ awClient=new Appwrite.Client().setEndpoint('https://nyc.cloud.appwrite.io/v1').setProject('6af57abc0001577c8491');
+ awAcc=new Appwrite.Account(awClient);
+ tdb=Appwrite.TablesDB?new Appwrite.TablesDB(awClient):null;
+ try{await enter(false)}catch(e){busy(false);if(!(e&&e.code===401))showErr(e)}
+}
 $('#lgo').onclick=submit;
 $('#lsw').onclick=function(){setMode(!regMode)};
 $('#lpass').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();submit()}});
